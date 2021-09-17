@@ -1,6 +1,6 @@
 use std::ops::Add;
 
-use crate::messages::base::{MessageChain, MessageElement};
+use crate::messages::{MessageChain, MessageElement};
 
 pub struct MessageChainBuilder
 {

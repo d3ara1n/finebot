@@ -1,7 +1,7 @@
 use std::borrow::Borrow;
 use std::fmt::{Display, Formatter};
 
-use crate::messages::base::{MessageChain, MessageElement};
+use crate::messages::{MessageChain, MessageElement};
 use crate::messages::builders::MessageChainBuilder;
 
 impl MessageChainBuilder

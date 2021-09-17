@@ -1,5 +1,3 @@
-use std::ops::Add;
-
 use crate::messages::{MessageChain, MessageElement};
 
 pub struct MessageChainBuilder

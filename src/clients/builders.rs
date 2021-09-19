@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use crate::clients::application::{Finebot, FinebotOptions};
 use crate::clients::middlewares::{Middleware, Pipeline};
-use crate::events::GenericEvents;
+use crate::events::GenericEvent;
 
 pub struct FinebotBuilder
 {

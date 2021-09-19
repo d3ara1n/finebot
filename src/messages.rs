@@ -1,6 +1,10 @@
-pub mod builders;
-pub mod extensions;
+use std::fmt::{Display, Formatter, Debug};
+use std::array::IntoIter;
+use crate::messages::MessageElement::{Source, Plain, At, Image, Quote};
 
+pub mod builders;
+
+#[derive(Debug)]
 pub enum MessageElement
 {
     Source(i64),
@@ -11,27 +15,45 @@ pub enum MessageElement
     Quote(i64)
 }
 
-pub struct MessageChain
+impl Display for MessageElement
 {
-    pub(crate) elements: Vec<MessageElement>,
-}
-
-impl MessageChain
-{
-    pub fn new(def: Vec<MessageElement>) -> MessageChain
-    {
-        MessageChain
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let string = match self
         {
-            elements: def
-        }
+            Source(id) => format!("[Source({})]", id),
+            Plain(text) => text.to_string(),
+            At(id) => format!("[at({})]", id),
+            AtAll => "[atall]".to_string(),
+            Image(url) => format!("[image({})]", url),
+            Quote(id) =>  format!("[quote({})]", id),
+            _ => "UNKNOWN".to_string()
+        };
+
+        write!(f, "{}", string)
     }
 }
 
-impl Iterator for MessageChain
-{
-    type Item = MessageElement;
+pub struct MessageChain {
+    pub(crate) elements: Vec<MessageElement>,
+}
 
-    fn next(&mut self) -> Option<Self::Item> {
-        return None;
+impl MessageChain {
+    pub fn new(elements: Vec<MessageElement>) -> MessageChain {
+        MessageChain { elements }
+    }
+}
+
+impl Display for MessageChain
+{
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let strings: Vec<String> = self.elements.iter().map( | element| -> String { element.to_string() } ).collect();
+        write!(f, "{}", strings.join(""))
+    }
+}
+
+impl Debug for MessageChain
+{
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self)
     }
 }

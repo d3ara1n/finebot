@@ -1,5 +1,6 @@
 use lazy_init::Lazy;
 
+#[derive(Debug)]
 pub enum GroupRole
 {
     Member,
@@ -7,6 +8,7 @@ pub enum GroupRole
     Owner
 }
 
+#[derive(Debug)]
 pub struct Friend
 {
     identity: u64,
@@ -27,6 +29,7 @@ impl Friend
     }
 }
 
+#[derive(Debug)]
 pub struct Member
 {
     identity: u64,
@@ -37,6 +40,7 @@ pub struct Member
     role: GroupRole
 }
 
+#[derive(Debug)]
 pub struct Group
 {
     identity: u64,

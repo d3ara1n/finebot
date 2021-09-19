@@ -4,7 +4,7 @@ use std::io::Read;
 use finebot::clients::application::FinebotOptions;
 use finebot::clients::builders::FinebotBuilder;
 use finebot::clients::middlewares::Pipeline;
-use finebot::events::GenericEvents;
+use finebot::events::GenericEvent;
 
 use crate::clients::application::Finebot;
 use crate::messages::builders::MessageChainBuilder;
@@ -27,15 +27,13 @@ fn main()
         .host(options.host)
         .port(options.port)
         .access_token(options.access_token)
-        .middleware(|event: GenericEvents, next: Pipeline| {
-            println!("[1]");
-            next.run(event);
-            println!("[/1]")
+        .middleware(|event: GenericEvent, next: Pipeline| {
+            println!("{:?}", event)
         })
-        .middleware(|event: GenericEvents, next: Pipeline| {
-            println!("[2]");
+        .middleware(|event: GenericEvent, next: Pipeline| {
+            println!("[]");
             next.run(event);
-            println!("[/2]");
+            println!("[/]");
         })
         .build().unwrap();
     bot.run();

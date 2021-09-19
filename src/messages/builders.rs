@@ -26,5 +26,24 @@ impl MessageChainBuilder
 
         return self;
     }
-}
 
+    pub fn add_plain(mut self, text: String) -> MessageChainBuilder
+    {
+        self.add(MessageElement::Plain(text))
+    }
+
+    pub fn add_at(mut self, id: u64) -> MessageChainBuilder
+    {
+        self.add(MessageElement::At(id))
+    }
+
+    pub fn add_at_all(mut self) -> MessageChainBuilder
+    {
+        self.add(MessageElement::AtAll)
+    }
+
+    pub fn add_image(mut self, url: String) -> MessageChainBuilder
+    {
+        self.add(MessageElement::Image(url))
+    }
+}

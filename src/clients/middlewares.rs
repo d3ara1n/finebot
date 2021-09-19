@@ -1,15 +1,15 @@
 use std::sync::Arc;
 
-use crate::events::GenericEvents;
+use crate::events::GenericEvent;
 
 pub trait Middleware: 'static
 {
-    fn handle(&self, event: GenericEvents, next: Pipeline);
+    fn handle(&self, event: GenericEvent, next: Pipeline);
 }
 
-impl<F: 'static + for<'a> Fn(GenericEvents, Pipeline)> Middleware for F
+impl<F: 'static + for<'a> Fn(GenericEvent, Pipeline)> Middleware for F
 {
-    fn handle(&self, event: GenericEvents, next: Pipeline) {
+    fn handle(&self, event: GenericEvent, next: Pipeline) {
         (self)(event, next);
     }
 }
@@ -31,7 +31,7 @@ impl Pipeline
         }
     }
 
-    pub fn run(& self, event: GenericEvents)
+    pub fn run(& self, event: GenericEvent)
     {
         if self.locator < self.all.len()
         {

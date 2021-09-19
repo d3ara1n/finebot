@@ -1,10 +1,8 @@
-pub mod friend_message;
-
 use crate::messages::MessageChain;
 use chrono::{Local, DateTime};
 use crate::relations::{Friend, Member, Group};
 
-pub enum GenericEvent
+pub enum GenericEvents
 {
     FriendMessage(FriendMessageEventArgs),
     GroupMessage(GroupMessageEventArgs),

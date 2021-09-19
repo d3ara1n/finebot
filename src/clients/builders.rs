@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use crate::clients::application::{Finebot, FinebotOptions};
 use crate::clients::middlewares::{Middleware, Pipeline};
-use crate::events::GenericEvent;
+use crate::events::GenericEvents;
 
 pub struct FinebotBuilder
 {
@@ -27,7 +27,7 @@ impl FinebotBuilder
 
     pub fn build<'a>(self) -> Result<Finebot, String>
     {
-        let next: Pipeline = Pipeline::new(self.middlewares);
+        let next: Pipeline = Pipeline::new(self.middlewares, 0);
 
         Ok(Finebot::new(FinebotOptions
                         {

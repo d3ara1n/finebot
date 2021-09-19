@@ -1,8 +1,8 @@
 use serde_derive::Deserialize;
-use crate::events::{GenericEvent, FriendMessageEventArgs};
+use crate::events::{GenericEvents, FriendMessageEventArgs};
 use crate::clients::middlewares::{Pipeline, Middleware};
 use std::sync::Arc;
-use crate::events::GenericEvent::FriendMessage;
+use crate::events::GenericEvents::FriendMessage;
 use crate::messages::MessageChain;
 use crate::relations::Friend;
 
@@ -35,6 +35,6 @@ impl Finebot
     {
         let friend = Friend::new(0, "hello".to_string(), "world".to_string());
         let event = FriendMessageEventArgs::new(MessageChain::new(Vec::new()), friend);
-        self.pipeline.run(GenericEvent::FriendMessage(event));
+        self.pipeline.run(GenericEvents::FriendMessage(event));
     }
 }

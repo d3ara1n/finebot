@@ -1,13 +1,13 @@
 use std::fs::File;
 use std::io::Read;
 
+use finebot::clients::application::FinebotOptions;
 use finebot::clients::builders::FinebotBuilder;
+use finebot::clients::middlewares::Pipeline;
+use finebot::events::GenericEvents;
 
 use crate::clients::application::Finebot;
 use crate::messages::builders::MessageChainBuilder;
-use finebot::clients::application::FinebotOptions;
-use finebot::events::GenericEvent;
-use finebot::clients::middlewares::Pipeline;
 
 mod messages;
 mod clients;
@@ -27,9 +27,16 @@ fn main()
         .host(options.host)
         .port(options.port)
         .access_token(options.access_token)
-        .middleware(|event: GenericEvent, next: &mut Pipeline| { println!("[1]"); next.run(event); println!("[/1]")} )
-        .middleware( | event: GenericEvent, next: &mut Pipeline | { println!("[2]"); next.run(event); println!("[/2]"); })
+        .middleware(|event: GenericEvents, next: Pipeline| {
+            println!("[1]");
+            next.run(event);
+            println!("[/1]")
+        })
+        .middleware(|event: GenericEvents, next: Pipeline| {
+            println!("[2]");
+            next.run(event);
+            println!("[/2]");
+        })
         .build().unwrap();
     bot.run();
-
 }

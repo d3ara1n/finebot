@@ -1,15 +1,15 @@
 use std::sync::Arc;
 
-use crate::events::GenericEvent;
+use crate::events::GenericEvents;
 
 pub trait Middleware: 'static
 {
-    fn handle(&self, event: GenericEvent, next: &mut Pipeline);
+    fn handle(&self, event: GenericEvents, next: Pipeline);
 }
 
-impl<F: 'static + for<'a> Fn(GenericEvent, &Pipeline)> Middleware for F
+impl<F: 'static + for<'a> Fn(GenericEvents, Pipeline)> Middleware for F
 {
-    fn handle(&self, event: GenericEvent, next: &mut Pipeline) {
+    fn handle(&self, event: GenericEvents, next: Pipeline) {
         (self)(event, next);
     }
 }
@@ -17,26 +17,26 @@ impl<F: 'static + for<'a> Fn(GenericEvent, &Pipeline)> Middleware for F
 pub struct Pipeline
 {
     all: Vec<Arc<dyn Middleware>>,
-    next: usize
+    locator: usize,
 }
 
 impl Pipeline
 {
-    pub fn new(all: Vec<Arc<dyn Middleware>>) -> Self
+    pub fn new(all: Vec<Arc<dyn Middleware>>, locator: usize) -> Self
     {
         Self
         {
             all,
-            next: 0
+            locator
         }
     }
 
-    pub fn run(&mut self, event: GenericEvent)
+    pub fn run(& self, event: GenericEvents)
     {
-        if self.next < self.all.len()
+        if self.locator < self.all.len()
         {
-            self.all[self.next].handle(event, self);
-            self.next += 1;
+            let middleware = &(self.all[self.locator]);
+            middleware.handle(event, Self::new(self.all.clone(), self.locator + 1));
         }
     }
 }

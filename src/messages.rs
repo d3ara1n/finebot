@@ -1,5 +1,4 @@
 use std::fmt::{Display, Formatter, Debug};
-use std::array::IntoIter;
 use crate::messages::MessageElement::{Source, Plain, At, Image, Quote};
 
 pub mod builders;
@@ -28,7 +27,7 @@ impl Display for MessageElement
             Quote(id) =>  format!("[quote({})]", id),
             _ => "UNKNOWN".to_string()
         };
-
+        
         write!(f, "{}", string)
     }
 }

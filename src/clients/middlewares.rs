@@ -1,3 +1,5 @@
+pub mod extensions;
+
 use std::sync::Arc;
 
 use crate::events::GenericEvent;

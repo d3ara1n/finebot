@@ -1,0 +1,65 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'finebot'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=finebot"
+                ],
+                "filter": {
+                    "name": "finebot",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/target/debug"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'finebot'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=finebot",
+                    "--package=finebot"
+                ],
+                "filter": {
+                    "name": "finebot",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/target/debug"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'finebot'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=finebot",
+                    "--package=finebot"
+                ],
+                "filter": {
+                    "name": "finebot",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/target/debug"
+        }
+    ]
+}

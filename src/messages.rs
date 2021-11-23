@@ -1,33 +1,30 @@
-use std::fmt::{Display, Formatter, Debug};
-use crate::messages::MessageElement::{Source, Plain, At, Image, Quote};
+use crate::messages::MessageElement::{At, Image, Plain, Quote, Source};
+use std::fmt::{Debug, Display, Formatter};
 
 pub mod builders;
 
 #[derive(Debug)]
-pub enum MessageElement
-{
+pub enum MessageElement {
     Source(i64),
     Plain(String),
     At(u64),
     AtAll,
     Image(String),
-    Quote(i64)
+    Quote(i64),
 }
 
-impl Display for MessageElement
-{
+impl Display for MessageElement {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let string = match self
-        {
+        let string = match self {
             Source(id) => format!("[Source({})]", id),
             Plain(text) => text.to_string(),
             At(id) => format!("[at({})]", id),
             AtAll => "[atall]".to_string(),
             Image(url) => format!("[image({})]", url),
-            Quote(id) =>  format!("[quote({})]", id),
-            _ => "UNKNOWN".to_string()
+            Quote(id) => format!("[quote({})]", id),
+            _ => "UNKNOWN".to_string(),
         };
-        
+
         write!(f, "{}", string)
     }
 }
@@ -42,16 +39,18 @@ impl MessageChain {
     }
 }
 
-impl Display for MessageChain
-{
+impl Display for MessageChain {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let strings: Vec<String> = self.elements.iter().map( | element| -> String { element.to_string() } ).collect();
+        let strings: Vec<String> = self
+            .elements
+            .iter()
+            .map(|element| -> String { element.to_string() })
+            .collect();
         write!(f, "{}", strings.join(""))
     }
 }
 
-impl Debug for MessageChain
-{
+impl Debug for MessageChain {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self)
     }

@@ -1,5 +1,5 @@
-pub mod messages;
-pub mod events;
-pub mod relations;
-pub mod clients;
 pub mod actions;
+pub mod clients;
+pub mod events;
+pub mod messages;
+pub mod relations;

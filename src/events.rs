@@ -1,60 +1,52 @@
-use chrono::{Local, DateTime};
-use crate::relations::{Friend, Member, Group};
 use crate::messages::MessageChain;
+use crate::relations::{Friend, Group, Member};
+use chrono::{DateTime, Local};
 use std::fmt::{Display, Formatter};
 
 #[derive(Debug)]
-pub enum GenericEvent
-{
+pub enum GenericEvent {
     FriendMessage(FriendMessageEventArgs),
     GroupMessage(GroupMessageEventArgs),
     FriendRecall(FriendRecallEventArgs),
-    GroupRecall(GroupRecallEventArgs)
+    GroupRecall(GroupRecallEventArgs),
 }
 
 #[derive(Debug)]
-pub struct FriendMessageEventArgs
-{
+pub struct FriendMessageEventArgs {
     time: DateTime<Local>,
     message: MessageChain,
-    sender: Friend
+    sender: Friend,
 }
 
-impl FriendMessageEventArgs
-{
-    pub fn new(message: MessageChain, sender: Friend) -> Self
-    {
-        Self
-        {
+impl FriendMessageEventArgs {
+    pub fn new(message: MessageChain, sender: Friend) -> Self {
+        Self {
             time: Local::now(),
             message,
-            sender
+            sender,
         }
     }
 }
 
 #[derive(Debug)]
-pub struct GroupMessageEventArgs
-{
+pub struct GroupMessageEventArgs {
     time: DateTime<Local>,
     message: MessageChain,
     sender: Member,
-    group: Group
+    group: Group,
 }
 
 #[derive(Debug)]
-pub struct FriendRecallEventArgs
-{
+pub struct FriendRecallEventArgs {
     time: DateTime<Local>,
     friend: Friend,
     message_id: i64,
 }
 
 #[derive(Debug)]
-pub struct GroupRecallEventArgs
-{
+pub struct GroupRecallEventArgs {
     time: DateTime<Local>,
     group: Group,
     member: Member,
-    operator: Member
+    operator: Member,
 }

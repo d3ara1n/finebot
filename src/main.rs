@@ -1,22 +1,26 @@
+use log::info;
 use std::fs::File;
 use std::io::Read;
-use log::info;
 
 use finebot::clients::application::FinebotOptions;
 use finebot::clients::builders::FinebotBuilder;
-use simplelog::{CombinedLogger, TermLogger, LevelFilter, Config, TerminalMode, ColorChoice};
+use simplelog::{ColorChoice, CombinedLogger, Config, LevelFilter, TermLogger, TerminalMode};
 
-mod messages;
+mod actions;
 mod clients;
 mod events;
+mod messages;
 mod relations;
-mod actions;
-
 
 #[tokio::main]
-async fn main()
-{
-    CombinedLogger::init(vec![TermLogger::new(LevelFilter::Info, Config::default(), TerminalMode::Mixed, ColorChoice::Always)]).unwrap();
+async fn main() {
+    CombinedLogger::init(vec![TermLogger::new(
+        LevelFilter::Info,
+        Config::default(),
+        TerminalMode::Mixed,
+        ColorChoice::Always,
+    )])
+    .unwrap();
 
     info!("configuration file: {}", "config.toml");
     let mut file = File::open("config.toml").expect("file not found");
@@ -28,6 +32,7 @@ async fn main()
         .port(options.port)
         .access_token(options.access_token)
         .use_logging()
-        .build().unwrap();
+        .build()
+        .unwrap();
     bot.run().await;
 }

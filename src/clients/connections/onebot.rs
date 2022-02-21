@@ -14,22 +14,15 @@ pub struct OnebotConnection {
 #[async_trait]
 impl Connection for OnebotConnection {
     async fn connect(&mut self) {
-        let socket = TcpStream::connect(self.ws_url.as_str()).await?;
-        let mut client = Client::new(socket, self.ws_url.as_str(),"");
-        let (mut sender, mut receiver) = match client.handshake().await? {
-            ServerResponse::Accepted { .. } => client.into_builder().finish(),
-            ServerResponse::Redirect {status_code, location} => unimplemented!(),
-            ServerResponse::Rejected {status_code} => unimplemented!()
-        };
-        loop {
-            let data = receiver.receive_data().await;
-        }
+        // yes you just get connected
     }
 
     fn listen<F: Fn(GenericEvent)>(&mut self, fun: F) {
+        // yes you just listen to the connection
     }
 
     fn send(&mut self, action: GenericAction) {
+        // yes you just send a message
     }
 
     fn new(url: Url) -> Self {
